@@ -103,20 +103,6 @@ public class HdfsClientDemo {
             System.out.println("文件名："+locatedFileStatus.getPath().getName());
             System.out.println("权限："+locatedFileStatus.getPermission());
             System.out.println("============================================");
-            BlockLocation[] blockLocations = locatedFileStatus.getBlockLocations();
-            for(BlockLocation b:blockLocations){
-                String[] names = b.getNames();
-                for(String n:names){
-                    System.out.println("块名称"+n);
-                }
-                System.out.println("块起始偏移量："+b.getOffset());
-                System.out.println("块长度"+b.getLength());
-                //块所在的datanode节点
-                String[] hosts = b.getHosts();
-                for(String str:hosts){
-                    System.out.println("块主机"+str);
-                }
-            }
         }
         fs.close();
     }
