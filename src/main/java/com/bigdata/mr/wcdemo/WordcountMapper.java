@@ -6,7 +6,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import java.io.IOException;
 
 /**
- * KEYIN:默认情况下，是mr框架所读到的一行文本的起始偏量，Long,
+ * KEYIN:默认情况下，是mr框架所读到的一行文本的起始偏量，Long,进来的数据 默认是每一个，所以默认的数据类型是LongWriteable
  *
  * VALUEIN:默认情况下，是mr框架所读到的一行本文的内容，String,
  *         同上，所以用Text
@@ -21,6 +21,7 @@ import java.io.IOException;
  * boolean 》》 BooleanWritable
  * double 》》 DoubleWritable
  * byte 》》 BytesWritable
+ * object 》》 ObjectWritable
  */
 public class  WordcountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 

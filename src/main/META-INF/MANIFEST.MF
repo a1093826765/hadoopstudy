@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.bigdata.mr.wcdemo.WordercountDriver
+Main-Class: com.bigdata.mr.flowsum.FlowCount
 

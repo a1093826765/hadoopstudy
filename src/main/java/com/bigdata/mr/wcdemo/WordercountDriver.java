@@ -14,6 +14,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * 相当于一个yarn集群的客户端
  * 需要在此封装我们的mr程序的相关运行参数，指定jar包
  * 最后提交给yarn
+ *
+ * 此程序是计算输入的所有文件的单词数量
+ * linux:
+ * hadoop jar xxx.jar hadoop的输入路径 hadoop的输出路径（输出路径不能存在，自动生成）
  */
 public class WordercountDriver {
 
