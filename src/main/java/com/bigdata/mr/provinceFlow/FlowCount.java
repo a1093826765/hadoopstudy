@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * 把mapper和reduer都写在一个类中
  *
- * 此程序是通过文本数据拿到所需要的数据
+ * 此程序是通过文本数据拿到所需要的数据并进行分区
  */
 public class FlowCount {
     static class FlowMapper extends Mapper<LongWritable,Text,Text, com.bigdata.mr.flowsum.FlowBean> {
@@ -44,7 +44,7 @@ public class FlowCount {
                 upFlow+=flowBean.getUpFlow();
                 dFlow+=flowBean.getdFlow();
             }
-            String res="上传流量："+upFlow+"--下载流量："+dFlow+"--总流量："+upFlow+dFlow;
+            String res=upFlow+"\t"+dFlow+"\t"+(upFlow+dFlow);
             context.write(key,new Text(res));
         }
     }

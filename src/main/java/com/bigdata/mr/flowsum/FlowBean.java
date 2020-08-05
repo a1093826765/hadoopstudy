@@ -1,12 +1,13 @@
 package com.bigdata.mr.flowsum;
 
 import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class FlowBean implements Writable {
+public class FlowBean implements WritableComparable<FlowBean> {
     private long upFlow;
     private long dFlow;
 
@@ -15,6 +16,11 @@ public class FlowBean implements Writable {
     }
 
     public FlowBean(long upFlow, long dFlow) {
+        this.upFlow = upFlow;
+        this.dFlow = dFlow;
+    }
+
+    public void setAll(long upFlow, long dFlow) {
         this.upFlow = upFlow;
         this.dFlow = dFlow;
     }
@@ -57,5 +63,21 @@ public class FlowBean implements Writable {
         upFlow = dataInput.readLong();
         dFlow=dataInput.readLong();
 
+    }
+
+    @Override
+    public String toString() {
+        return upFlow + "\t" + dFlow+"\t"+(upFlow+dFlow);
+    }
+
+    /**
+     * 倒序排序
+     * @param o
+     * @return
+     */
+    @Override
+    public int compareTo(FlowBean o) {
+        long sum=upFlow+dFlow;
+        return sum>o.getdFlow()+o.getUpFlow()?-1:1;
     }
 }

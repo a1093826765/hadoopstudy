@@ -15,9 +15,6 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -51,9 +48,10 @@ public class FlowCount {
                 upFlow+=flowBean.getUpFlow();
                 dFlow+=flowBean.getdFlow();
             }
-            String res="上传流量："+upFlow+"--下载流量："+dFlow+"--总流量："+upFlow+dFlow;
+            String res=upFlow+"\t"+dFlow+"\t"+(upFlow+dFlow);
             context.write(key,new Text(res));
         }
+
     }
 
     public static void main(String[] args) throws Exception{
