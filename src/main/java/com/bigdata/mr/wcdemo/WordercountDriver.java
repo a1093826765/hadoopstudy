@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.CombineTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
@@ -38,6 +39,12 @@ public class WordercountDriver {
         //指定mapper输出数据的类型
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
+
+        //如果不设置，默认使用TextInputFormatClass.class
+        //多个小文件分区使用，可以优化速度，用过合并多个小文件的分区方法
+        job.setInputFormatClass(CombineTextInputFormat.class);
+        CombineTextInputFormat.setMaxInputSplitSize(job,4194304);
+        CombineTextInputFormat.setMinInputSplitSize(job,2097152);
 
         //指定最终输出数据的kv类型（有reducer就是reducer的输出，没有reducer就是mapper的输出）
         job.setOutputKeyClass(Text.class);
