@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.input.CombineTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -38,21 +39,24 @@ public class RJoin {
 
             }else{
                 //由于需要执行序列化方法，不能给予空值，所以给予一个默认值
-                infoBean.set(0,split[0],"",0,split[1],Integer.parseInt(split[2]),Integer.parseInt(split[3]),"1");
+                infoBean.set(0,"",split[0],0,split[1],Integer.parseInt(split[2]),Integer.parseInt(split[3]),"1");
 
             }
             context.write(new Text(infoBean.getP_id()),infoBean);
         }
     }
 
+
     static class RJoinReducer extends Reducer<Text,InfoBean,Text,InfoBean>{
         InfoBean keyBean=new InfoBean();
         //用于储存该id下关联的表内容
         ArrayList<InfoBean> infoBeanArrayList=new ArrayList<InfoBean>();
+
         @Override
         protected void reduce(Text key, Iterable<InfoBean> values, Context context) throws IOException, InterruptedException {
-            for(InfoBean bean:values){
-                if(bean.getFlag().equals("0")){
+
+           for(InfoBean bean:values){
+                if(bean.getFlag().equals("1")){
                     try {
                         BeanUtils.copyProperties(keyBean,bean);
                     } catch (Exception e) {
@@ -87,8 +91,8 @@ public class RJoin {
         Job job = Job.getInstance(configuration);
 
         //指定本程序jar所在路径
-//        job.setJar("/Users/november/IdeaProjects/hadoopstudy/out/artifacts/hadoopstudy_jar");
-        job.setJarByClass(RJoin.class);
+        job.setJar("/Users/november/IdeaProjects/hadoopstudy/out/artifacts/hadoopstudy_jar/hadoopstudy.jar");
+//        job.setJarByClass(RJoin.class);
 
         //指定本业务job使用的mapper和reducer的业务类
         job.setMapperClass(RJoinMapper.class);
@@ -104,9 +108,9 @@ public class RJoin {
         job.setOutputValueClass(InfoBean.class);
 
         //指定job输入的原始文件目录
-        FileInputFormat.setInputPaths(job,new Path(args[0]));
+        FileInputFormat.setInputPaths(job,new Path("/test/input"));
         //指定job输出结果的所在目录
-        FileOutputFormat.setOutputPath(job,new Path(args[1]));
+        FileOutputFormat.setOutputPath(job,new Path("/test/out"));
 
         //将job中配置的相关配置，以及job所用的java类所在的jar包，提交给yarn运行
 //        job.submit();//此方法并不知道程序的运行情况

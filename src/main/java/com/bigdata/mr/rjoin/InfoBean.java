@@ -120,7 +120,7 @@ public class InfoBean implements Writable {
         dataOutput.writeUTF(p_name);
         dataOutput.writeInt(category_id);
         dataOutput.writeFloat(price);
-
+        dataOutput.writeUTF(flag);
     }
 
     @Override
@@ -132,5 +132,6 @@ public class InfoBean implements Writable {
         p_name=dataInput.readUTF();
         category_id=dataInput.readInt();
         price=dataInput.readFloat();
+        flag=dataInput.readUTF();
     }
 }
