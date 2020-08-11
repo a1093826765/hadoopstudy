@@ -48,13 +48,11 @@ public class RJoin {
 
 
     static class RJoinReducer extends Reducer<Text,InfoBean,Text,InfoBean>{
-        InfoBean keyBean=new InfoBean();
-        //用于储存该id下关联的表内容
-        ArrayList<InfoBean> infoBeanArrayList=new ArrayList<InfoBean>();
-
         @Override
         protected void reduce(Text key, Iterable<InfoBean> values, Context context) throws IOException, InterruptedException {
-
+            InfoBean keyBean=new InfoBean();
+            //用于储存该id下关联的表内容
+            ArrayList<InfoBean> infoBeanArrayList=new ArrayList<InfoBean>();
            for(InfoBean bean:values){
                 if(bean.getFlag().equals("1")){
                     try {
@@ -110,7 +108,7 @@ public class RJoin {
         //指定job输入的原始文件目录
         FileInputFormat.setInputPaths(job,new Path("/test/input"));
         //指定job输出结果的所在目录
-        FileOutputFormat.setOutputPath(job,new Path("/test/out"));
+        FileOutputFormat.setOutputPath(job,new Path("/test/out2"));
 
         //将job中配置的相关配置，以及job所用的java类所在的jar包，提交给yarn运行
 //        job.submit();//此方法并不知道程序的运行情况
