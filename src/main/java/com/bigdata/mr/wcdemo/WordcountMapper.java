@@ -22,6 +22,7 @@ import java.io.IOException;
  * double 》》 DoubleWritable
  * byte 》》 BytesWritable
  * object 》》 ObjectWritable
+ * null 》》
  */
 public class  WordcountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 

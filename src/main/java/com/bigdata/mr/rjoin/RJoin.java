@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+/**
+ * reduceJoin
+ * 进行两表之间数据的拼接
+ */
 public class RJoin {
     static class RJoinMapper extends Mapper<LongWritable, Text,Text,InfoBean>{
         InfoBean infoBean=new InfoBean();
