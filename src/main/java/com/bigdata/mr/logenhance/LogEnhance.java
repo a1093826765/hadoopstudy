@@ -40,6 +40,7 @@ public class LogEnhance {
 		@Override
 		protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			// 获取一个计数器用来记录不合法的日志行数, 组名, 计数器名称
+			//计数器最终输出到控制面板组和计数器的数量，这里是malformed，malformedline数量
 			Counter counter = context.getCounter("malformed", "malformedline");
 			String line = value.toString();
 			String[] fields = StringUtils.split(line, "\t");
