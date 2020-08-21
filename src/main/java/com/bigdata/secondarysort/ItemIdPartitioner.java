@@ -3,7 +3,10 @@ package com.bigdata.secondarysort;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.mapreduce.Partitioner;
 
-
+/**
+ * map执行后就根据分区放到对应的位置
+ * 用于分区，设置分区数量等于reduce task数量一致
+ */
 public class ItemIdPartitioner extends Partitioner<OrderBean, NullWritable>{
 
 	@Override

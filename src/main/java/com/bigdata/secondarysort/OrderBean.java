@@ -9,7 +9,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 
 /**
- * ������Ϣbean��ʵ��hadoop�����л�����
+ *
  * @author duanhaitao@itcast.cn
  *
  */
@@ -44,11 +44,18 @@ public class OrderBean implements WritableComparable<OrderBean>{
 	}
 
 
-
+	/**
+	 * 二级排序，先排序id,再排序金额
+	 * 调用hadoop.io中的compareTo的排序方法
+	 * @param o
+	 * @return
+	 */
 	@Override
 	public int compareTo(OrderBean o) {
 		int cmp = this.itemid.compareTo(o.getItemid());
+		//当cmp==0时，代表两个id相同，则进入二级排序
 		if (cmp == 0) {
+			//加正负号代表正倒排序
 			cmp = -this.amount.compareTo(o.getAmount());
 		}
 		return cmp;

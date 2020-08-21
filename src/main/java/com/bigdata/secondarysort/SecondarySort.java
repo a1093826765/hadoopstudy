@@ -26,7 +26,7 @@ public class SecondarySort {
 	static class SecondarySortMapper extends Mapper<LongWritable, Text, OrderBean, NullWritable>{
 		
 		OrderBean bean = new OrderBean();
-		
+		//负责解析数据到bean对象
 		@Override
 		protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
@@ -34,7 +34,6 @@ public class SecondarySort {
 			String[] fields = StringUtils.split(line, ",");
 			
 			bean.set(new Text(fields[0]), new DoubleWritable(Double.parseDouble(fields[2])));
-			
 			context.write(bean, NullWritable.get());
 			
 		}
@@ -43,7 +42,7 @@ public class SecondarySort {
 	
 	static class SecondarySortReducer extends Reducer<OrderBean, NullWritable, OrderBean, NullWritable>{
 		
-		
+		//先会走到WritableComparator
 		//到达reduce时，相同id的所有bean已经被看成一组，且金额最大的那个一排在第一位
 		@Override
 		protected void reduce(OrderBean key, Iterable<NullWritable> values, Context context) throws IOException, InterruptedException {
@@ -66,15 +65,15 @@ public class SecondarySort {
 		job.setOutputKeyClass(OrderBean.class);
 		job.setOutputValueClass(NullWritable.class);
 		
-		FileInputFormat.setInputPaths(job, new Path("c:/wordcount/gpinput"));
-		FileOutputFormat.setOutputPath(job, new Path("c:/wordcount/gpoutput"));
+		FileInputFormat.setInputPaths(job, new Path("/Users/november/Desktop/file/test/input/orders.txt"));
+		FileOutputFormat.setOutputPath(job, new Path("/Users/november/Desktop/file/test/out1"));
 		
 		//在此设置自定义的Groupingcomparator类 
 		job.setGroupingComparatorClass(ItemidGroupingComparator.class);
 		//在此设置自定义的partitioner类
 		job.setPartitionerClass(ItemIdPartitioner.class);
 		
-		job.setNumReduceTasks(2);
+		job.setNumReduceTasks(3);
 		
 		job.waitForCompletion(true);
 		
