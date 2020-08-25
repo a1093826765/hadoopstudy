@@ -17,7 +17,7 @@ import org.apache.hadoop.util.ToolRunner;
 //这里 extends Configured implements Tool 就不需要把job写进main方法，可以直接写到run方法里
 public class PMain  extends Configured implements Tool {
     public static void main(String[] args) throws Exception {
-        args=new String[]{"/Users/november/Desktop/file/test/wholeinput","/Users/november/Desktop/file/test/out2"};
+        args=new String[]{"/Users/november/Desktop/file/test/wholeinput/1.txt","/Users/november/Desktop/file/test/out2"};
         int exitCode = ToolRunner.run(new PMain(),
                 args);
         System.exit(exitCode);

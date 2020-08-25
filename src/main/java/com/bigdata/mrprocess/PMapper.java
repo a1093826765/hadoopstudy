@@ -8,7 +8,6 @@ import java.io.IOException;
 
 //有多少个文件，mapper就执行多少次
 public class PMapper extends Mapper<LongWritable, Text,Text,PBeanSort> {
-    Text tx=new Text();
     PBeanSort pBeanSort=new PBeanSort(1,"map","123456");
 
     //map初始化
@@ -23,9 +22,9 @@ public class PMapper extends Mapper<LongWritable, Text,Text,PBeanSort> {
     //第十步，当recordReader获取key和value后调取map逻辑层
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        System.out.println("===>>mapper数据 -- longWritable==>"+key.toString()+"\t"+"text==>"+value.toString());
         System.out.println("===>>Mapper -- map");
-        tx.set("map");
-        context.write(tx,pBeanSort);
+        context.write(value,pBeanSort);
     }
 
     //开始执行mapper,此方法会调用 setup-->map-->cleanup

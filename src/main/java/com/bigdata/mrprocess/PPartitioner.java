@@ -13,6 +13,6 @@ public class PPartitioner extends Partitioner<Text,PBeanSort> {
     @Override
     public int getPartition(Text text, PBeanSort pBeanSort, int i) {
         System.out.println("===>>PPartitioner -- getPartition");
-        return 1;
+        return i;
     }
 }

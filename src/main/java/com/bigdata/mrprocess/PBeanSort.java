@@ -12,7 +12,8 @@ public class PBeanSort implements WritableComparable<PBeanSort> {
     private String passowrd;
 
     //反序列化时，需要反射调用一个空参构造函数
-    //第十六步，mapper全部执行完后，执行空参构造
+    //第十六步，mapper全部执行完后,需要序列化，执行空参构造
+    //第二十二步，reduce初始化后，需要反序列化，执行空参构造
     public PBeanSort() {
         System.out.println("===>>PBeanSort -- PBeanSort空参");
     }
@@ -87,8 +88,8 @@ public class PBeanSort implements WritableComparable<PBeanSort> {
     @Override
     public void write(DataOutput dataOutput) throws IOException {
         System.out.println("===>>PBeanSort -- write");
-        System.out.println(id+"\t"+userName+"\t"+passowrd);
-        dataOutput.write(id);
+        System.out.println("===>>序列化 -- "+id+"\t"+userName+"\t"+passowrd);
+        dataOutput.writeInt(id);
         dataOutput.writeUTF(userName);
         dataOutput.writeUTF(passowrd);
     }
@@ -99,11 +100,13 @@ public class PBeanSort implements WritableComparable<PBeanSort> {
      * @param dataInput
      * @throws IOException
      */
+    //第二十三步，reduce初始化执行后，需要反序列化，调用完空参构造后调用
     @Override
     public void readFields(DataInput dataInput) throws IOException {
         System.out.println("===>>PBeanSort -- readFields");
         id=dataInput.readInt();
-//        userName=dataInput.readUTF();
-//        passowrd=dataInput.readUTF();
+        userName=dataInput.readUTF();
+        passowrd=dataInput.readUTF();
+        System.out.println("===>>反序列化 --"+id+"\t"+userName+"\t"+passowrd);
     }
 }

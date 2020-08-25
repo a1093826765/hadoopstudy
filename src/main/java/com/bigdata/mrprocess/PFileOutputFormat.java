@@ -18,7 +18,7 @@ import java.io.IOException;
 public class PFileOutputFormat extends FileOutputFormat<Text, PBeanSort> {
 
     //最终输出时，会调用此方法拿到RecordWriter
-    //第十八步，当
+    //第十八步，当空参数构造后，map执行完毕，获取RecordWriter
     @Override
     public RecordWriter<Text, PBeanSort> getRecordWriter(TaskAttemptContext taskAttemptContext) throws IOException, InterruptedException {
         System.out.println("===>>PFileOutputFormat -- getRecordWriter");
